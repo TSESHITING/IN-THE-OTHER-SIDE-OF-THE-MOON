@@ -1,16 +1,13 @@
 import { nodeAsset } from '../config'
 
-// 11 QR nodes × 2 languages = 22 video assets
-//
-// Each node carries:
-//   - targetImage: AR marker image used by Mind-AR for recognition
-//   - zh / en: localized video metadata (title, subtitle, src, duration)
-//
-// Replace empty `src` / `targetImage` values as real assets become available.
-// Duration is in seconds — update to match each video's real length.
+// QR code values → node mapping
+// QR_A = Node 1, QR_B = Node 2, ... QR_K = Node 11
+const QR_CODES = ['QR_A','QR_B','QR_C','QR_D','QR_E','QR_F','QR_G','QR_H','QR_I','QR_J','QR_K']
+
 export const QR_NODES = [
   {
     id: 1,
+    qrCode: 'QR_A',
     targetImage: nodeAsset('Target_1.png'),
     zh: {
       title: '導覽影片 1',
@@ -25,24 +22,14 @@ export const QR_NODES = [
       duration: 85,
     },
   },
-  // Nodes 2–11: placeholder data, ready to be filled when assets arrive
   ...Array.from({ length: 10 }, (_, i) => {
     const id = i + 2
     return {
       id,
+      qrCode: QR_CODES[id - 1],
       targetImage: '',
-      zh: {
-        title: `導覽影片 ${id}`,
-        subtitle: '中文版',
-        src: '',
-        duration: 90 + (id - 1) * 8,
-      },
-      en: {
-        title: `Guide Video ${id}`,
-        subtitle: 'English',
-        src: '',
-        duration: 85 + (id - 1) * 7,
-      },
+      zh: { title: `導覽影片 ${id}`, subtitle: '中文版', src: '', duration: 90 + (id - 1) * 8 },
+      en: { title: `Guide Video ${id}`, subtitle: 'English', src: '', duration: 85 + (id - 1) * 7 },
     }
   }),
 ]
